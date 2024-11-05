@@ -14,7 +14,7 @@ if (!username) {
 }
 
 if (!password) {
-	console.error("No username. Set SOPHOS_PASSWORD in .env")
+	console.error("No password. Set SOPHOS_PASSWORD in .env")
 	Deno.exit(1)
 }
 
