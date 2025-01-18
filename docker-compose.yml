@@ -1,0 +1,7 @@
+services:
+    daemon:
+        build: .
+        restart: always
+        environment:
+            - SOPHOS_USERNAME=${SOPHOS_USERNAME}
+            - SOPHOS_PASSWORD=${SOPHOS_PASSWORD}
