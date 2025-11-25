@@ -1,17 +1,8 @@
 # BITS Auto Campnet
-Auto login to https://campnet.bits-goa.ac.in:8090/httpclient.html
-- Fork of https://github.com/khrj/bits-wifi-autologin/  
-- CLI variant of https://github.com/Devsoc-BPGC/auto-campnet
-
+Auto login to https://campnet.bits-goa.ac.in:8090/httpclient.html  
 Checks `http://captive.apple.com` every 5s
 
 ## Running
-
-[Download auto-campnet](https://github.com/khrj/bits-auto-campnet/releases) or install via deno:
-
-```sh
-deno install -g --allow-net --allow-read --allow-env https://raw.githubusercontent.com/khrj/bits-auto-campnet/refs/heads/main/auto-campnet.ts
-```
 
 Set `SOPHOS_USERNAME` and `SOPHOS_PASSWORD` in `.env`.
 
@@ -20,18 +11,30 @@ SOPHOS_USERNAME=yourusername
 SOPHOS_PASSWORD=yourpassword
 ```
 
-then run
+### 1. Shell script
+
+Download
 
 ```sh
-auto-campnet
+curl -fsSLO https://raw.githubusercontent.com/khrj/bits-auto-campnet/refs/heads/main/auto-campnet.sh
 ```
 
-## Development
+Run
 
 ```sh
-deno run --allow-net --allow-read --allow-env auto-campnet.ts
+bash auto-campnet.sh
 ```
 
+### 2. Docker container
+
+Start
+
 ```sh
-deno compile --allow-net --allow-read --allow-env auto-campnet.ts
+docker compose up
+```
+
+Stop
+
+```sh
+docker compose down
 ```

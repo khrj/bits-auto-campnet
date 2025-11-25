@@ -1,14 +1,16 @@
-FROM alpine:3.21
+FROM alpine:3.22
 
 # Create app directory
 WORKDIR /usr/src/app
 
-RUN apk add --no-cache deno
+# Install curl
+RUN apk add --no-cache curl
 
 # Bundle app source
-COPY auto-campnet.ts deno.json deno.lock ./
+COPY auto-campnet.sh ./
 
-WORKDIR /usr/src/app
+# Make script executable
+RUN chmod +x auto-campnet.sh
 
 # Run
-CMD ["deno", "run", "--allow-net", "--allow-read", "--allow-env", "auto-campnet.ts" ]
+CMD ["./auto-campnet.sh"]
