@@ -1,4 +1,4 @@
-package dev.sparshg.bitslogin.ui.theme
+package com.khushrajrathod.autocampnet.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,4 +1,4 @@
-package dev.sparshg.bitslogin
+package com.khushrajrathod.autocampnet
 
 import android.content.ComponentName
 import android.content.Context

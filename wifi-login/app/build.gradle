@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'dev.sparshg.bitslogin'
+    namespace 'com.khushrajrathod.autocampnet'
     compileSdk 36
 
     defaultConfig {
-        applicationId "dev.sparshg.bitslogin"
+        applicationId "com.khushrajrathod.autocampnet"
         minSdk 26
         targetSdk 36
         versionCode 14
@@ -23,6 +23,11 @@ android {
 
     buildTypes {
         release {
+            // No release keystore is configured for this fork, so release
+            // builds are signed with the auto-generated debug key. This
+            // keeps CI-built release APKs installable without needing
+            // signing secrets.
+            signingConfig signingConfigs.debug
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -48,7 +53,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.android.play:review-ktx:2.0.1'
     implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.4'
     implementation 'androidx.activity:activity-compose:1.9.1'

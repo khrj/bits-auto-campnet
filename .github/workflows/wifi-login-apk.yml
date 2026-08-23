@@ -30,14 +30,14 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Build debug APK
-        run: ./gradlew assembleDebug
+      - name: Build release APK
+        run: ./gradlew assembleRelease
 
       - name: Compute release metadata
         id: meta
         run: |
           echo "sha_short=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
-          echo "apk_path=$(find app/build/outputs/apk/debug -name '*.apk' | head -n1)" >> "$GITHUB_OUTPUT"
+          echo "apk_path=$(find app/build/outputs/apk/release -name '*.apk' | head -n1)" >> "$GITHUB_OUTPUT"
 
       - name: Publish prerelease
         uses: softprops/action-gh-release@v2
@@ -47,7 +47,7 @@ jobs:
           target_commitish: ${{ github.sha }}
           prerelease: true
           body: |
-            Automated debug build of the `wifi-login` Android app from commit ${{ github.sha }}.
+            Automated release build of the `wifi-login` Android app from commit ${{ github.sha }}.
 
-            This APK is signed with the Android debug key, for testing only.
+            No release keystore is configured, so this APK is signed with the Android debug key. It installs fine for personal use, but isn't suitable for distributing as an update to a differently-signed install.
           files: wifi-login/${{ steps.meta.outputs.apk_path }}

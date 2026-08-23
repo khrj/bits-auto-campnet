@@ -1,4 +1,4 @@
-package dev.sparshg.bitslogin
+package com.khushrajrathod.autocampnet
 
 import org.junit.Test
 

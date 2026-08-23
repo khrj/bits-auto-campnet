@@ -1,8 +1,7 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package dev.sparshg.bitslogin
+package com.khushrajrathod.autocampnet
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context.MODE_PRIVATE
 import android.content.Context.POWER_SERVICE
@@ -48,10 +47,7 @@ import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import com.google.android.play.core.review.ReviewInfo
-import com.google.android.play.core.review.ReviewManager
-import com.google.android.play.core.review.ReviewManagerFactory
-import dev.sparshg.bitslogin.ui.theme.MyApplicationTheme
+import com.khushrajrathod.autocampnet.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -104,14 +100,9 @@ fun Content(modifier: Modifier = Modifier) {
     val openDialogF1 = remember { mutableStateOf(false) }
     val openDialogF2 = remember { mutableStateOf(false) }
     val openDialogF3 = remember { mutableStateOf(false) }
-    val openReview = remember { mutableStateOf(false) }
     val context = LocalContext.current
     val dataStore = Store(context)
     val settings: Settings by Store.getInstance(context).data.collectAsState(initial = Settings())
-    val reviewManager = remember {
-        ReviewManagerFactory.create(context)
-    }
-    val reviewInfo = rememberReviewTask(reviewManager)
     val scope = rememberCoroutineScope()
     val pm = context.getSystemService(POWER_SERVICE) as PowerManager
     val isIgnoringBatteryOptimizations = remember {
@@ -185,23 +176,6 @@ fun Content(modifier: Modifier = Modifier) {
                         Text("Dismiss")
                     }
                 })
-        }
-        if (openReview.value) {
-            openReview.value = false
-            LaunchedEffect(key1 = reviewInfo) {
-                if (settings.review < System.currentTimeMillis() - 2678400.toLong()) {
-                    scope.launch {
-                        dataStore.setReview(System.currentTimeMillis())
-                    }
-                    reviewInfo?.let {
-//                        Log.e("TAG", "reviewInfo: $reviewInfo")
-                        reviewManager.launchReviewFlow(context as Activity, reviewInfo)
-                    }
-                } else {
-                    uriHandler.openUri("https://play.google.com/store/apps/details?id=dev.sparshg.bitslogin")
-                    Toast.makeText(context, "Rate the app if you liked!", Toast.LENGTH_SHORT).show()
-                }
-            }
         }
         if (openDialog2.value) {
             var page by remember { mutableStateOf(0) }
@@ -561,15 +535,6 @@ fun Content(modifier: Modifier = Modifier) {
                         contentDescription = "LinkedIn Contact",
                     )
                 }
-                IconButton(onClick = {
-                    openReview.value = true
-                }) {
-                    Icon(
-                        Icons.Filled.Star,
-                        contentDescription = "Playstore",
-                        modifier = modifier.size(28.dp)
-                    )
-                }
             }, floatingActionButton = {
                 ExtendedFloatingActionButton(
                     onClick = {
@@ -596,20 +561,6 @@ fun Content(modifier: Modifier = Modifier) {
 
         }
     }
-}
-
-@Composable
-fun rememberReviewTask(reviewManager: ReviewManager): ReviewInfo? {
-    var reviewInfo: ReviewInfo? by remember {
-        mutableStateOf(null)
-    }
-    reviewManager.requestReviewFlow().addOnCompleteListener {
-        if (it.isSuccessful) {
-            reviewInfo = it.result
-        }
-    }
-
-    return reviewInfo
 }
 
 @Composable

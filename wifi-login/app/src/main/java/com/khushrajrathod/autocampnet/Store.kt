@@ -1,4 +1,4 @@
-package dev.sparshg.bitslogin
+package com.khushrajrathod.autocampnet
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -40,12 +40,6 @@ class Store(val context: Context) {
     suspend fun setService(v: Boolean) {
         dataStore!!.updateData {
             it.copy(service = v)
-        }
-    }
-
-    suspend fun setReview(v: Long) {
-        dataStore!!.updateData {
-            it.copy(review = v)
         }
     }
 

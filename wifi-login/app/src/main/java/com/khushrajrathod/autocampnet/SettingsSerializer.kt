@@ -1,4 +1,4 @@
-package dev.sparshg.bitslogin
+package com.khushrajrathod.autocampnet
 import androidx.datastore.core.Serializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json

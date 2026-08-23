@@ -1,4 +1,4 @@
-package dev.sparshg.bitslogin
+package com.khushrajrathod.autocampnet
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
