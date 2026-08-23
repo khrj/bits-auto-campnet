@@ -1,0 +1,53 @@
+name: wifi-login APK prerelease
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "wifi-login/**"
+      - ".github/workflows/wifi-login-apk.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wifi-login
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Build release APK
+        run: ./gradlew assembleRelease
+
+      - name: Compute release metadata
+        id: meta
+        run: |
+          echo "sha_short=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "apk_path=$(find app/build/outputs/apk/release -name '*.apk' | head -n1)" >> "$GITHUB_OUTPUT"
+
+      - name: Publish prerelease
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: wifi-login-${{ steps.meta.outputs.sha_short }}
+          name: wifi-login ${{ steps.meta.outputs.sha_short }}
+          target_commitish: ${{ github.sha }}
+          prerelease: true
+          body: |
+            Automated release build of the `wifi-login` Android app from commit ${{ github.sha }}.
+
+            No release keystore is configured, so this APK is signed with the Android debug key. It installs fine for personal use, but isn't suitable for distributing as an update to a differently-signed install.
+          files: wifi-login/${{ steps.meta.outputs.apk_path }}

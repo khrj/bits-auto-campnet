@@ -38,3 +38,7 @@ Stop
 ```sh
 docker compose down
 ```
+
+### 3. Android app
+
+See [`wifi-login/`](wifi-login) for an Android app that does the same for the BITS Pilani/Goa/Hyderabad campus Wi-Fi captive portal.
