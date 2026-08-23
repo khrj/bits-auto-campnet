@@ -2,6 +2,8 @@
 Auto login to https://campnet.bits-goa.ac.in:8090/httpclient.html  
 Checks `http://captive.apple.com` every 5s
 
+For android, use a [modern build](https://github.com/khrj/bits-auto-campnet/releases/download/wifi-login-e4c1202/app-release.apk) of sparshg/wifi-login
+
 ## Running
 
 Set `SOPHOS_USERNAME` and `SOPHOS_PASSWORD` in `.env`.
