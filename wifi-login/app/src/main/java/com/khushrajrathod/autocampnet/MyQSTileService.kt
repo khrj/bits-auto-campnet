@@ -145,8 +145,8 @@ class MyQSTileService : TileService() {
                         pref.edit().putBoolean("enabled", true).apply()
                         qsTile.state = Tile.STATE_ACTIVE
                         qsTile.updateTile()
-                        connectivityManager.bindProcessToNetwork(network)
-                        VolleySingleton.getInstance(context.applicationContext).addToRequestQueue(stringRequest)
+                        VolleySingleton.getInstance(context.applicationContext)
+                            .addToRequestQueue(stringRequest, network)
 //                        connectivityManager.getNetworkCapabilities(network)?.let {
 //                            if (it.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)) {
 //                                Log.e("TAG", "onAvailable: internet")
