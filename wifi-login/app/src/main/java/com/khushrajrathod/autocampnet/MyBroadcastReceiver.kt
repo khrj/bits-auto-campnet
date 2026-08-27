@@ -111,11 +111,11 @@ class MyBroadcastReceiver : BroadcastReceiver() {
                 object : ConnectivityManager.NetworkCallback() {
                     override fun onAvailable(network: android.net.Network) {
                         super.onAvailable(network)
-                        connectivityManager.bindProcessToNetwork(network)
 
                         if (VolleySingleton.isEmpty) {
                             editor.putBoolean("enabled", true).apply()
-                            VolleySingleton.getInstance(context.applicationContext).addToRequestQueue(stringRequest)
+                            VolleySingleton.getInstance(context.applicationContext)
+                                .addToRequestQueue(stringRequest, network)
 //                            TileService.requestListeningState(
 //                                context, ComponentName(context, MyQSTileService::class.java)
 //                            )
